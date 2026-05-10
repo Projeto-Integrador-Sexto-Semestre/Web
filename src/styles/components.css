@@ -1,0 +1,216 @@
+.brand {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: #29a36a;
+  color: white;
+  font-weight: 800;
+}
+
+.brand small,
+.nav-group p,
+.eyebrow {
+  color: var(--muted);
+}
+
+.sidebar .brand small,
+.sidebar .nav-group p {
+  color: #a8baad;
+}
+
+.nav-button,
+.nav-group button,
+.group-card button,
+.table-actions button,
+.primary-button {
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.nav-button,
+.nav-group button {
+  width: 100%;
+  margin-bottom: 6px;
+  text-align: left;
+  color: #dce9df;
+  background: transparent;
+}
+
+.nav-button.is-active,
+.nav-group button.is-active,
+.nav-button:hover,
+.nav-group button:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.nav-group {
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.nav-group p,
+.eyebrow {
+  margin: 0 0 8px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.hero,
+.iot-panel,
+.content-header,
+.panel,
+.group-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.hero,
+.iot-panel,
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+  padding: 24px;
+}
+
+.hero h1,
+.content-header h1 {
+  max-width: 780px;
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 4rem);
+  line-height: 1.02;
+}
+
+.hero p,
+.content-header p,
+.iot-panel p,
+.group-card p {
+  color: var(--muted);
+}
+
+.hero-metrics,
+.telemetry {
+  display: grid;
+  gap: 10px;
+  min-width: 220px;
+}
+
+.hero-metrics span,
+.telemetry span,
+.status-pill {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border-radius: 8px;
+  padding: 12px;
+  background: var(--surface-2);
+}
+
+.group-card,
+.panel {
+  padding: 18px;
+}
+
+.group-card span {
+  color: var(--accent-2);
+  font-weight: 800;
+}
+
+.group-card h2,
+.panel h2,
+.iot-panel h2 {
+  margin: 8px 0;
+}
+
+.group-card div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.group-card button,
+.primary-button {
+  color: white;
+  background: var(--accent);
+}
+
+.form-panel {
+  display: grid;
+  gap: 12px;
+}
+
+label {
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+input,
+select {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 11px 12px;
+  background: white;
+  color: var(--text);
+}
+
+.panel-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 680px;
+}
+
+th,
+td {
+  border-bottom: 1px solid var(--line);
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.table-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.table-actions button:first-child {
+  background: #dceee8;
+  color: var(--accent);
+}
+
+.table-actions button:last-child {
+  background: #f8dddd;
+  color: var(--danger);
+}

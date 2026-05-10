@@ -1,0 +1,14 @@
+{
+  "name": "pi-smart-home-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite --host 127.0.0.1 --port 5173",
+    "preview": "vite --host 127.0.0.1 --port 4173"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
+  }
+}
