@@ -11,7 +11,7 @@
   width: 44px;
   height: 44px;
   border-radius: 8px;
-  background: #29a36a;
+  background: #4f46e5;
   color: white;
   font-weight: 800;
 }
@@ -24,7 +24,7 @@
 
 .sidebar .brand small,
 .sidebar .nav-group p {
-  color: #a8baad;
+  color: #aeb8cf;
 }
 
 .nav-button,
@@ -71,7 +71,8 @@
 .iot-panel,
 .content-header,
 .panel,
-.group-card {
+.group-card,
+.chart-card {
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--surface);
@@ -121,14 +122,99 @@
   background: var(--surface-2);
 }
 
-.group-card,
-.panel {
+.chart-card {
   padding: 18px;
 }
 
-.group-card span {
-  color: var(--accent-2);
-  font-weight: 800;
+.bar-chart {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.bar-row {
+  display: grid;
+  grid-template-columns: 130px minmax(90px, 1fr) 32px;
+  gap: 10px;
+  align-items: center;
+}
+
+.bar-row span {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.bar-row strong {
+  color: var(--muted);
+  text-align: right;
+}
+
+.bar-track {
+  height: 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e5e9f2;
+}
+
+.bar-track i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.signal-card {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+}
+
+.signal-card p {
+  color: var(--muted);
+  margin: 0;
+}
+
+.donut-chart {
+  display: grid;
+  place-items: center;
+  width: 150px;
+  aspect-ratio: 1;
+  justify-self: center;
+  border-radius: 50%;
+  background: conic-gradient(var(--accent) calc(var(--progress) * 1%), #e5e9f2 0);
+  position: relative;
+}
+
+.donut-chart::after {
+  content: "";
+  position: absolute;
+  inset: 18px;
+  border-radius: inherit;
+  background: white;
+}
+
+.donut-chart span {
+  position: relative;
+  z-index: 1;
+  color: var(--text);
+  font-size: 1.8rem;
+  font-weight: 900;
+}
+
+.signal-list {
+  display: grid;
+  gap: 8px;
+}
+
+.signal-list span {
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: #f8fafc;
+  color: var(--muted);
+}
+
+.group-card,
+.panel {
+  padding: 18px;
 }
 
 .group-card h2,

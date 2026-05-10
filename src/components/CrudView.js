@@ -7,7 +7,7 @@ export function CrudView({ entity, rows, loading }) {
   return `
     <section class="content-header">
       <div>
-        <p class="eyebrow">${entity.owner} - ${entity.groupTitle}</p>
+        <p class="eyebrow">${entity.groupTitle}</p>
         <h1>CRUD ${entity.label}</h1>
         <p>Endpoint preparado: <code>${entity.endpoint}</code></p>
       </div>

@@ -1,6 +1,5 @@
 export const entityGroups = [
   {
-    owner: "Pessoa 1",
     title: "Usuarios",
     note: "Login, JWT e controle de acesso",
     entities: [
@@ -29,7 +28,6 @@ export const entityGroups = [
     ]
   },
   {
-    owner: "Pessoa 2",
     title: "Casas",
     note: "Estrutura fisica do sistema",
     entities: [
@@ -58,7 +56,6 @@ export const entityGroups = [
     ]
   },
   {
-    owner: "Pessoa 3",
     title: "Dispositivos",
     note: "Lampada, sensor, camera e outros dispositivos IoT",
     entities: [
@@ -87,7 +84,6 @@ export const entityGroups = [
     ]
   },
   {
-    owner: "Pessoa 4",
     title: "Sensores",
     note: "MQTT salva leituras no historico",
     entities: [
@@ -116,7 +112,6 @@ export const entityGroups = [
     ]
   },
   {
-    owner: "Pessoa 5",
     title: "Alertas",
     note: "Gas detectado, movimento e temperatura alta",
     entities: [
@@ -145,7 +140,6 @@ export const entityGroups = [
     ]
   },
   {
-    owner: "Pessoa 6",
     title: "Automacao",
     note: "Regras e acoes automatizadas",
     entities: [
@@ -174,7 +168,6 @@ export const entityGroups = [
     ]
   },
   {
-    owner: "Pessoa 7",
     title: "Monitoramento",
     note: "Notificacoes e logs do sistema",
     entities: [
@@ -205,5 +198,5 @@ export const entityGroups = [
 ];
 
 export const entities = entityGroups.flatMap((group) =>
-  group.entities.map((entity) => ({ ...entity, owner: group.owner, groupTitle: group.title, groupNote: group.note }))
+  group.entities.map((entity) => ({ ...entity, groupTitle: group.title, groupNote: group.note }))
 );

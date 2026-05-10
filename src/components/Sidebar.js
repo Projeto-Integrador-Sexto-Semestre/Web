@@ -16,7 +16,7 @@ export function Sidebar({ groups, selectedKey }) {
           .map(
             (group) => `
               <section class="nav-group">
-                <p>${group.owner} - ${group.title}</p>
+                <p>${group.title}</p>
                 ${group.entities
                   .map((entity) => `<button class="${navClass(entity.key)}" data-nav="${entity.key}">${entity.label}</button>`)
                   .join("")}
