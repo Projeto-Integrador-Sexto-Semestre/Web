@@ -27,6 +27,31 @@
   color: #aeb8cf;
 }
 
+.user-card {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.user-card small {
+  color: #aeb8cf;
+  overflow-wrap: anywhere;
+}
+
+.user-card button {
+  width: fit-content;
+  border: 0;
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: #111827;
+  background: #f8fafc;
+  font-weight: 800;
+}
+
 .nav-button,
 .nav-group button,
 .group-card button,
@@ -89,6 +114,86 @@
   padding: 24px;
 }
 
+.api-warning {
+  margin-bottom: 18px;
+  border: 1px solid #f8d28b;
+  border-radius: 8px;
+  padding: 12px 14px;
+  background: #fff7e6;
+  color: #8a5200;
+  font-weight: 700;
+}
+
+.auth-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    linear-gradient(180deg, rgba(17, 24, 39, 0.04), rgba(17, 24, 39, 0)),
+    var(--bg);
+}
+
+.auth-panel {
+  width: min(100%, 440px);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 22px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.auth-brand {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.auth-brand small {
+  display: block;
+  color: var(--muted);
+}
+
+.auth-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  padding: 4px;
+  background: var(--surface-2);
+}
+
+.auth-tabs button {
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: var(--muted);
+  background: transparent;
+  font-weight: 800;
+}
+
+.auth-tabs button.is-active {
+  color: white;
+  background: var(--accent);
+}
+
+.auth-form {
+  display: grid;
+  gap: 12px;
+}
+
+.auth-error {
+  margin-bottom: 14px;
+  border: 1px solid #f2b8b8;
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: var(--danger);
+  background: #fff1f1;
+  font-weight: 800;
+}
+
 .hero h1,
 .content-header h1 {
   max-width: 780px;
@@ -102,6 +207,10 @@
 .iot-panel p,
 .group-card p {
   color: var(--muted);
+}
+
+.sensor-hero {
+  align-items: stretch;
 }
 
 .hero-metrics,
@@ -120,6 +229,107 @@
   border-radius: 8px;
   padding: 12px;
   background: var(--surface-2);
+}
+
+.sensor-card {
+  min-height: 178px;
+  display: grid;
+  align-content: space-between;
+  gap: 22px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 18px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.sensor-card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.sensor-card-header span {
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.sensor-card-header b {
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: #eef6f1;
+  color: #17694a;
+  font-size: 0.78rem;
+}
+
+.sensor-value {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.sensor-value strong {
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  line-height: 0.95;
+}
+
+.sensor-value small {
+  color: var(--muted);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.sensor-card.temperature {
+  border-top: 5px solid #dc2626;
+}
+
+.sensor-card.gas {
+  border-top: 5px solid #f59e0b;
+}
+
+.sensor-card.humidity {
+  border-top: 5px solid #0891b2;
+}
+
+.sensor-card.light {
+  border-top: 5px solid #eab308;
+}
+
+.sensor-card.smoke {
+  border-top: 5px solid #475569;
+}
+
+.sensor-card.motion {
+  border-top: 5px solid #4f46e5;
+}
+
+.room-list,
+.alert-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.room-list span,
+.alert-list span {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border-radius: 8px;
+  padding: 12px;
+  background: #f8fafc;
+  color: var(--muted);
+}
+
+.room-list b {
+  color: var(--text);
+}
+
+.alert-list .is-ok {
+  color: #17694a;
+  background: #eef6f1;
+  font-weight: 800;
 }
 
 .chart-card {

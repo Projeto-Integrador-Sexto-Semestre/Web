@@ -1,14 +1,28 @@
-const API_BASE_URL = "http://localhost:8080";
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "/backend";
+
+const normalizePayload = (payload) =>
+  Object.fromEntries(
+    Object.entries(payload)
+      .filter(([, value]) => value !== "")
+      .map(([key, value]) => {
+        if (value === "true") return [key, true];
+        if (value === "false") return [key, false];
+        if (key.endsWith("Id")) return [key, Number(value)];
+        return [key, value];
+      })
+  );
 
 export async function restRequest(path, options = {}) {
   const token = localStorage.getItem("jwtToken");
+  const body = options.body && typeof options.body !== "string" ? JSON.stringify(normalizePayload(options.body)) : options.body;
   const response = await fetch(`${API_BASE_URL}${path}`, {
+    ...options,
     headers: {
       "Content-Type": "application/json",
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...options.headers
     },
-    ...options
+    body
   });
 
   if (!response.ok) {
@@ -17,3 +31,82 @@ export async function restRequest(path, options = {}) {
 
   return response.status === 204 ? null : response.json();
 }
+
+export const restApi = {
+  async login(payload) {
+    return restRequest("/users/login", {
+      method: "POST",
+      body: payload
+    });
+  },
+
+  async register(payload) {
+    return restRequest("/users/register", {
+      method: "POST",
+      body: payload
+    });
+  },
+
+  async profiles() {
+    return restRequest("/profiles");
+  },
+
+  async list(entity) {
+    return restRequest(entity.endpoint);
+  },
+
+  async create(entity, payload) {
+    return restRequest(entity.createEndpoint ?? entity.endpoint, {
+      method: "POST",
+      body: payload
+    });
+  },
+
+  async update(entity, id, payload) {
+    if (entity.updateMethod === "PUT") {
+      return restRequest(`${entity.endpoint}/${id}`, {
+        method: "PUT",
+        body: payload
+      });
+    }
+
+    if (entity.updateMethod === "PATCH_STATUS") {
+      return restRequest(`${entity.endpoint}/${id}/status`, {
+        method: "PATCH",
+        body: { status: payload.status }
+      });
+    }
+
+    throw new Error("Este recurso nao possui endpoint de edicao no backend.");
+  },
+
+  async remove(entity, id) {
+    return restRequest(`${entity.endpoint}/${id}`, { method: "DELETE" });
+  },
+
+  async mqttSnapshot() {
+    const [devices, sensors, alerts] = await Promise.all([
+      restRequest("/devices").catch(() => []),
+      restRequest("/sensors").catch(() => []),
+      restRequest("/alerts").catch(() => [])
+    ]);
+
+    const firstDevice = devices[0] ?? {};
+    const firstSensor = sensors[0] ?? {};
+    return {
+      broker: "Backend SmartHouse",
+      topic: firstSensor.mqttTopic ?? firstDevice.topic ?? "casa/+/telemetry",
+      connected: true,
+      lastPayload: {
+        deviceId: firstDevice.name ?? firstSensor.name ?? "Sem dispositivo cadastrado",
+        temperature: "--",
+        humidity: "--",
+        gasPpm: "--",
+        luminosity: "--",
+        smokePpm: "--",
+        motion: alerts.length > 0,
+        flame: false
+      }
+    };
+  }
+};

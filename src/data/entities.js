@@ -1,28 +1,31 @@
 export const entityGroups = [
   {
     title: "Usuarios",
-    note: "Login, JWT e controle de acesso",
+    note: "Cadastro, login e controle de acesso",
     entities: [
       {
         key: "users",
         label: "Usuario",
-        endpoint: "/api/users",
+        endpoint: "/users",
+        createEndpoint: "/users/register",
         fields: [
-          { name: "nome", label: "Nome", type: "text" },
+          { name: "name", label: "Nome", type: "text" },
           { name: "email", label: "Email", type: "email" },
-          { name: "status", label: "Status", type: "select", options: ["Ativo", "Bloqueado", "Pendente"] },
-          { name: "perfil", label: "Perfil", type: "select", options: ["Admin", "Morador", "Visitante"] }
+          { name: "password", label: "Senha", type: "password", hideInTable: true },
+          { name: "profileId", label: "ID do Perfil", type: "number" }
         ]
       },
       {
         key: "profiles",
         label: "Perfil/Permissoes",
-        endpoint: "/api/profiles",
+        endpoint: "/profiles",
+        updateMethod: "PUT",
         fields: [
-          { name: "nome", label: "Perfil", type: "text" },
-          { name: "nivel", label: "Nivel", type: "select", options: ["Administrador", "Operador", "Leitura"] },
-          { name: "permissoes", label: "Permissoes", type: "text" },
-          { name: "status", label: "Status", type: "select", options: ["Ativo", "Inativo"] }
+          { name: "name", label: "Perfil", type: "text" },
+          { name: "description", label: "Descricao", type: "text" },
+          { name: "canControlDevices", label: "Controla dispositivos", type: "select", options: ["true", "false"] },
+          { name: "canEditStructure", label: "Edita estrutura", type: "select", options: ["true", "false"] },
+          { name: "canViewLogs", label: "Visualiza logs", type: "select", options: ["true", "false"] }
         ]
       }
     ]
@@ -34,23 +37,21 @@ export const entityGroups = [
       {
         key: "homes",
         label: "Casa",
-        endpoint: "/api/homes",
+        endpoint: "/houses",
         fields: [
-          { name: "nome", label: "Casa", type: "text" },
-          { name: "endereco", label: "Endereco", type: "text" },
-          { name: "responsavel", label: "Responsavel", type: "text" },
-          { name: "status", label: "Status", type: "select", options: ["Monitorada", "Manutencao", "Offline"] }
+          { name: "name", label: "Casa", type: "text" },
+          { name: "address", label: "Endereco", type: "text" },
+          { name: "userId", label: "ID do Usuario", type: "number" }
         ]
       },
       {
         key: "rooms",
         label: "Comodo",
-        endpoint: "/api/rooms",
+        endpoint: "/rooms",
         fields: [
-          { name: "nome", label: "Comodo", type: "text" },
-          { name: "casa", label: "Casa", type: "text" },
-          { name: "andar", label: "Andar", type: "number" },
-          { name: "status", label: "Status", type: "select", options: ["Ativo", "Inativo"] }
+          { name: "name", label: "Comodo", type: "text" },
+          { name: "type", label: "Tipo", type: "select", options: ["SALA", "COZINHA", "QUARTO", "BANHEIRO", "GARAGEM"] },
+          { name: "houseId", label: "ID da Casa", type: "number" }
         ]
       }
     ]
@@ -62,23 +63,24 @@ export const entityGroups = [
       {
         key: "devices",
         label: "Dispositivo IoT",
-        endpoint: "/api/devices",
+        endpoint: "/devices",
+        updateMethod: "PATCH_STATUS",
         fields: [
-          { name: "nome", label: "Dispositivo", type: "text" },
-          { name: "tipo", label: "Tipo", type: "select", options: ["Sensor", "Lampada", "Camera", "Atuador"] },
-          { name: "comodo", label: "Comodo", type: "text" },
-          { name: "status", label: "Status", type: "select", options: ["Online", "Offline", "Manutencao"] }
+          { name: "name", label: "Dispositivo", type: "text" },
+          { name: "deviceTypeId", label: "ID do Tipo", type: "number" },
+          { name: "topic", label: "Topico MQTT", type: "text" },
+          { name: "status", label: "Status", type: "select", options: ["ON", "OFF"] },
+          { name: "roomId", label: "ID do Comodo", type: "number" }
         ]
       },
       {
         key: "deviceTypes",
         label: "Tipo de Dispositivo",
-        endpoint: "/api/device-types",
+        endpoint: "/device-types",
         fields: [
-          { name: "nome", label: "Tipo", type: "text" },
-          { name: "categoria", label: "Categoria", type: "select", options: ["Sensor", "Atuador", "Seguranca"] },
-          { name: "protocolo", label: "Protocolo", type: "select", options: ["MQTT", "HTTP", "Bluetooth"] },
-          { name: "status", label: "Status", type: "select", options: ["Ativo", "Inativo"] }
+          { name: "name", label: "Tipo", type: "text" },
+          { name: "manufacturer", label: "Fabricante", type: "text" },
+          { name: "unit", label: "Unidade", type: "text" }
         ]
       }
     ]
@@ -90,23 +92,23 @@ export const entityGroups = [
       {
         key: "sensors",
         label: "Sensor",
-        endpoint: "/api/sensors",
+        endpoint: "/sensors",
         fields: [
-          { name: "nome", label: "Sensor", type: "text" },
-          { name: "tipo", label: "Tipo", type: "select", options: ["Temperatura", "Gas", "Movimento", "Umidade"] },
-          { name: "topico", label: "Topico MQTT", type: "text" },
-          { name: "status", label: "Status", type: "select", options: ["Online", "Offline"] }
+          { name: "name", label: "Sensor", type: "text" },
+          { name: "mqttTopic", label: "Topico MQTT", type: "text" },
+          { name: "deviceTypeId", label: "ID do Tipo", type: "number" },
+          { name: "roomId", label: "ID do Comodo", type: "number" }
         ]
       },
       {
         key: "sensorReadings",
         label: "Leitura de Sensor",
-        endpoint: "/api/sensor-readings",
+        endpoint: "/sensor-history/sensor/1",
+        createEndpoint: "/sensor-history",
         fields: [
-          { name: "sensor", label: "Sensor", type: "text" },
-          { name: "valor", label: "Valor", type: "number" },
-          { name: "unidade", label: "Unidade", type: "text" },
-          { name: "coletadoEm", label: "Coletado em", type: "datetime-local" }
+          { name: "value", label: "Valor", type: "number" },
+          { name: "sensorId", label: "ID do Sensor", type: "number" },
+          { name: "timestamp", label: "Coletado em", type: "datetime-local", readOnly: true }
         ]
       }
     ]
@@ -118,23 +120,21 @@ export const entityGroups = [
       {
         key: "alerts",
         label: "Alerta",
-        endpoint: "/api/alerts",
+        endpoint: "/alerts",
         fields: [
-          { name: "titulo", label: "Titulo", type: "text" },
-          { name: "tipo", label: "Tipo", type: "select", options: ["Gas", "Movimento", "Temperatura"] },
-          { name: "prioridade", label: "Prioridade", type: "select", options: ["Baixa", "Media", "Alta", "Critica"] },
-          { name: "status", label: "Status", type: "select", options: ["Aberto", "Resolvido"] }
+          { name: "message", label: "Mensagem", type: "text" },
+          { name: "alertTypeId", label: "ID do Tipo", type: "number" },
+          { name: "sensorId", label: "ID do Sensor", type: "number", optional: true },
+          { name: "deviceId", label: "ID do Dispositivo", type: "number", optional: true }
         ]
       },
       {
         key: "alertTypes",
         label: "Tipo de Alerta",
-        endpoint: "/api/alert-types",
+        endpoint: "/alert-types",
         fields: [
-          { name: "nome", label: "Tipo", type: "text" },
-          { name: "descricao", label: "Descricao", type: "text" },
-          { name: "severidade", label: "Severidade", type: "select", options: ["Informativo", "Atencao", "Emergencia"] },
-          { name: "status", label: "Status", type: "select", options: ["Ativo", "Inativo"] }
+          { name: "name", label: "Tipo", type: "text" },
+          { name: "description", label: "Descricao", type: "text" }
         ]
       }
     ]
@@ -146,23 +146,22 @@ export const entityGroups = [
       {
         key: "automationRules",
         label: "Regra de Automacao",
-        endpoint: "/api/automation-rules",
+        endpoint: "/automation-rules",
         fields: [
-          { name: "nome", label: "Regra", type: "text" },
-          { name: "condicao", label: "Condicao", type: "text" },
-          { name: "acao", label: "Acao", type: "text" },
-          { name: "status", label: "Status", type: "select", options: ["Ativa", "Pausada"] }
+          { name: "name", label: "Regra", type: "text" },
+          { name: "condition", label: "Condicao", type: "text" },
+          { name: "enabled", label: "Ativa", type: "select", options: ["true", "false"] },
+          { name: "actionId", label: "ID da Acao", type: "number" }
         ]
       },
       {
         key: "actions",
         label: "Acao",
-        endpoint: "/api/actions",
+        endpoint: "/actions",
         fields: [
-          { name: "nome", label: "Acao", type: "text" },
-          { name: "dispositivo", label: "Dispositivo", type: "text" },
-          { name: "comando", label: "Comando", type: "select", options: ["Ligar", "Desligar", "Notificar", "Bloquear"] },
-          { name: "status", label: "Status", type: "select", options: ["Disponivel", "Indisponivel"] }
+          { name: "name", label: "Acao", type: "text" },
+          { name: "deviceId", label: "ID do Dispositivo", type: "number" },
+          { name: "command", label: "Comando", type: "select", options: ["ON", "OFF", "SET:25"] }
         ]
       }
     ]
@@ -174,23 +173,21 @@ export const entityGroups = [
       {
         key: "notifications",
         label: "Notificacao",
-        endpoint: "/api/notifications",
+        endpoint: "/notifications",
         fields: [
-          { name: "titulo", label: "Titulo", type: "text" },
-          { name: "destinatario", label: "Destinatario", type: "text" },
-          { name: "canal", label: "Canal", type: "select", options: ["App", "Email", "SMS"] },
-          { name: "status", label: "Status", type: "select", options: ["Enviada", "Pendente", "Falhou"] }
+          { name: "message", label: "Mensagem", type: "text" },
+          { name: "userId", label: "ID do Usuario", type: "number" }
         ]
       },
       {
         key: "eventLogs",
         label: "Log de Eventos",
-        endpoint: "/api/event-logs",
+        endpoint: "/event-logs",
         fields: [
-          { name: "origem", label: "Origem", type: "text" },
-          { name: "evento", label: "Evento", type: "text" },
-          { name: "nivel", label: "Nivel", type: "select", options: ["Info", "Warn", "Erro"] },
-          { name: "criadoEm", label: "Criado em", type: "datetime-local" }
+          { name: "eventType", label: "Tipo", type: "text" },
+          { name: "message", label: "Mensagem", type: "text" },
+          { name: "userId", label: "ID do Usuario", type: "number" },
+          { name: "timestamp", label: "Criado em", type: "datetime-local", readOnly: true }
         ]
       }
     ]

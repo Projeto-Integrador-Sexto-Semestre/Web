@@ -6,7 +6,7 @@ export function IotPanel({ mqtt }) {
       <div>
         <p class="eyebrow">IoT via MQTT</p>
         <h2>ESP32 enviando telemetria para o broker</h2>
-        <p>O backend Spring Boot deve assinar o topico e persistir leituras em <code>/api/sensor-readings</code>.</p>
+        <p>O backend Spring Boot assina o topico e persiste leituras em <code>/sensor-history</code>.</p>
       </div>
       <div class="telemetry">
         <span>Broker <strong>${mqtt?.broker ?? "Mosquitto"}</strong></span>

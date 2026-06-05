@@ -1,7 +1,7 @@
 import { EntityForm } from "./EntityForm.js";
 import { DataTable } from "./DataTable.js";
 
-export function CrudView({ entity, rows, loading }) {
+export function CrudView({ entity, rows, loading, source = "API" }) {
   if (!entity) return "";
 
   return `
@@ -9,9 +9,9 @@ export function CrudView({ entity, rows, loading }) {
       <div>
         <p class="eyebrow">${entity.groupTitle}</p>
         <h1>CRUD ${entity.label}</h1>
-        <p>Endpoint preparado: <code>${entity.endpoint}</code></p>
+        <p>Endpoint integrado: <code>${entity.endpoint}</code></p>
       </div>
-      <span class="status-pill">Mock API</span>
+      <span class="status-pill">${source}</span>
     </section>
     <section class="work-grid">
       ${EntityForm({ entity })}

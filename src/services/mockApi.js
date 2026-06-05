@@ -44,8 +44,12 @@ export const mockApi = {
       lastPayload: {
         deviceId: "esp32-cozinha",
         temperature: 26.4,
+        humidity: 58,
         gasPpm: 118,
-        motion: false
+        luminosity: 72,
+        smokePpm: 9,
+        motion: false,
+        flame: false
       }
     };
   }

@@ -1,4 +1,4 @@
-export function Sidebar({ groups, selectedKey }) {
+export function Sidebar({ groups, selectedKey, user }) {
   const navClass = (key) => (selectedKey === key ? "nav-button is-active" : "nav-button");
 
   return `
@@ -9,6 +9,11 @@ export function Sidebar({ groups, selectedKey }) {
           <strong>Smart Home</strong>
           <small>KMP + REST + MQTT</small>
         </div>
+      </div>
+      <div class="user-card">
+        <strong>${user?.name ?? "Usuario"}</strong>
+        <small>${user?.email ?? ""}</small>
+        <button type="button" data-logout>Sair</button>
       </div>
       <button class="${navClass("dashboard")}" data-nav="dashboard">Dashboard</button>
       <div class="nav-groups">

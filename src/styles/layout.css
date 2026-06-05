@@ -38,10 +38,24 @@
   margin-bottom: 18px;
 }
 
+.sensor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.sensor-overview {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+}
+
 @media (max-width: 900px) {
   .app-shell,
   .work-grid,
-  .analytics-grid {
+  .analytics-grid,
+  .sensor-overview {
     grid-template-columns: 1fr;
   }
 

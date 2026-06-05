@@ -3,12 +3,14 @@ export function EntityForm({ entity }) {
     <form class="panel form-panel" data-form>
       <h2>Novo registro</h2>
       ${entity.fields
+        .filter((field) => !field.readOnly)
         .map((field) => {
+          const required = field.optional ? "" : "required";
           if (field.type === "select") {
             return `
               <label>
                 ${field.label}
-                <select name="${field.name}" required>
+                <select name="${field.name}" ${required}>
                   ${field.options.map((option) => `<option>${option}</option>`).join("")}
                 </select>
               </label>
@@ -18,7 +20,7 @@ export function EntityForm({ entity }) {
           return `
             <label>
               ${field.label}
-              <input name="${field.name}" type="${field.type}" required />
+              <input name="${field.name}" type="${field.type}" ${required} />
             </label>
           `;
         })

@@ -1,4 +1,24 @@
+const nestedValue = (row, fieldName) => {
+  if (fieldName.endsWith("Id")) {
+    const relation = fieldName.slice(0, -2);
+    return row[fieldName] ?? row[relation]?.id ?? "";
+  }
+
+  const relationMap = {
+    mqttTopic: row.mqttTopic,
+    eventType: row.eventType,
+    canControlDevices: row.canControlDevices,
+    canEditStructure: row.canEditStructure,
+    canViewLogs: row.canViewLogs
+  };
+
+  return relationMap[fieldName] ?? row[fieldName] ?? "";
+};
+
 export function DataTable({ entity, rows, loading }) {
+  const visibleFields = entity.fields.filter((field) => !field.hideInTable);
+  const canUpdate = Boolean(entity.updateMethod);
+
   return `
     <div class="panel table-panel">
       <div class="panel-title">
@@ -10,7 +30,7 @@ export function DataTable({ entity, rows, loading }) {
           <thead>
             <tr>
               <th>ID</th>
-              ${entity.fields.map((field) => `<th>${field.label}</th>`).join("")}
+              ${visibleFields.map((field) => `<th>${field.label}</th>`).join("")}
               <th>Acoes</th>
             </tr>
           </thead>
@@ -20,9 +40,9 @@ export function DataTable({ entity, rows, loading }) {
                 (row) => `
                   <tr>
                     <td>${row.id}</td>
-                    ${entity.fields.map((field) => `<td>${row[field.name] ?? ""}</td>`).join("")}
+                    ${visibleFields.map((field) => `<td>${nestedValue(row, field.name)}</td>`).join("")}
                     <td class="table-actions">
-                      <button data-update="${row.id}">Editar</button>
+                      ${canUpdate ? `<button data-update="${row.id}">Editar</button>` : ""}
                       <button data-delete="${row.id}">Excluir</button>
                     </td>
                   </tr>

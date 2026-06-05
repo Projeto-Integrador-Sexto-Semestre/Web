@@ -1,0 +1,12 @@
+
+> pi-smart-home-web@0.1.0 dev
+> vite --host 127.0.0.1 --port 5173
+
+
+  VITE v6.4.2  ready in 616 ms
+
+  ➜  Local:   http://127.0.0.1:5173/
+10:52:27 PM [vite] (client) page reload src/components/Dashboard.js
+10:52:30 PM [vite] (client) page reload src/components/UseCasePresentation.js
+10:52:37 PM [vite] (client) hmr update /src/styles/components.css
+10:52:41 PM [vite] (client) hmr update /src/styles/layout.css
