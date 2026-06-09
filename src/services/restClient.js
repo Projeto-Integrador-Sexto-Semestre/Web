@@ -61,7 +61,8 @@ export const restApi = {
       restRequest("/sensors").catch(() => [])
     ]);
     const getLatest = async (sensorName) => {
-      const sensor = sensors.find(s => s.name.toLowerCase().includes(sensorName));
+      const normalize = (value) => value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      const sensor = sensors.find(s => normalize(s.name).includes(sensorName));
       if (!sensor) return "--";
       const history = await restRequest(`/sensor-history/sensor/${sensor.id}`).catch(() => []);
       return history[0]?.value ?? "--";
@@ -69,7 +70,7 @@ export const restApi = {
     const [temperature, luminosity, motion] = await Promise.all([
       getLatest("temperatura"),
       getLatest("luminosidade"),
-      getLatest("presença")
+      getLatest("presenca")
     ]);
     const firstDevice = devices[0] ?? {};
     return {
@@ -79,12 +80,8 @@ export const restApi = {
       lastPayload: {
         deviceId: firstDevice.name ?? "Sem dispositivo",
         temperature,
-        humidity: "--",
-        gasPpm: "--",
         luminosity,
-        smokePpm: "--",
-        motion: motion === "1" || motion === "true",
-        flame: false
+        motion: ["1", "true", "sim", "detectado"].includes(String(motion).toLowerCase())
       }
     };
   }

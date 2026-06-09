@@ -1,6 +1,6 @@
 .app-shell {
   display: grid;
-  grid-template-columns: 292px minmax(0, 1fr);
+  grid-template-columns: 280px minmax(0, 1fr);
   min-height: 100vh;
 }
 
@@ -9,18 +9,19 @@
   top: 0;
   height: 100vh;
   overflow: auto;
-  padding: 20px;
-  background: #111827;
+  padding: 22px;
+  background: var(--sidebar);
   color: #f8fafc;
 }
 
 .main-panel {
-  padding: 28px;
+  min-width: 0;
+  padding: clamp(16px, 3vw, 32px);
 }
 
 .work-grid {
   display: grid;
-  grid-template-columns: minmax(280px, 380px) minmax(0, 1fr);
+  grid-template-columns: minmax(260px, 360px) minmax(0, 1fr);
   gap: 18px;
   align-items: start;
 }
@@ -40,7 +41,7 @@
 
 .sensor-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
   margin-bottom: 18px;
 }
@@ -51,7 +52,17 @@
   gap: 16px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1120px) {
+  .app-shell {
+    grid-template-columns: 248px minmax(0, 1fr);
+  }
+
+  .sensor-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}
+
+@media (max-width: 920px) {
   .app-shell,
   .work-grid,
   .analytics-grid,
@@ -62,9 +73,38 @@
   .sidebar {
     position: static;
     height: auto;
+    padding: 16px;
+  }
+
+  .nav-groups {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 10px;
   }
 
   .main-panel {
-    padding: 18px;
+    padding: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .main-panel {
+    padding: 12px;
+  }
+
+  .sensor-grid,
+  .group-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-groups {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .nav-group {
+    min-width: 164px;
   }
 }

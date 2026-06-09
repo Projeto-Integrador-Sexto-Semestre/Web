@@ -26,7 +26,7 @@ export const mockDatabase = {
   ],
   sensors: [
     { id: 1, name: "Temperatura Sala", mqttTopic: "casa/sala/temperatura", deviceTypeId: 1, roomId: 1 },
-    { id: 2, name: "Gas Cozinha", mqttTopic: "casa/cozinha/gas", deviceTypeId: 1, roomId: 2 }
+    { id: 2, name: "Luminosidade Cozinha", mqttTopic: "casa/cozinha/luminosidade", deviceTypeId: 1, roomId: 2 }
   ],
   sensorReadings: [
     { id: 1, value: "26.4", sensorId: 1, timestamp: now },
@@ -49,6 +49,6 @@ export const mockDatabase = {
     { id: 1, message: "Alerta de temperatura", userId: 1, timestamp: now, read: false }
   ],
   eventLogs: [
-    { id: 1, eventType: "MQTT", message: "Mensagem recebida em casa/cozinha/gas", userId: 1, timestamp: now }
+    { id: 1, eventType: "MQTT", message: "Mensagem recebida em casa/cozinha/luminosidade", userId: 1, timestamp: now }
   ]
 };

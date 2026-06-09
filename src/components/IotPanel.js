@@ -12,7 +12,7 @@ export function IotPanel({ mqtt }) {
         <span>Broker <strong>${mqtt?.broker ?? "Mosquitto"}</strong></span>
         <span>Topico <strong>${mqtt?.topic ?? "home/+/telemetry"}</strong></span>
         <span>Temp <strong>${payload.temperature ?? "--"} C</strong></span>
-        <span>Gas <strong>${payload.gasPpm ?? "--"} ppm</strong></span>
+        <span>Luz <strong>${payload.luminosity ?? "--"}%</strong></span>
         <span>Movimento <strong>${payload.motion ? "Detectado" : "Normal"}</strong></span>
       </div>
     </section>

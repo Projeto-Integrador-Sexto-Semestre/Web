@@ -39,9 +39,9 @@ export function DataTable({ entity, rows, loading }) {
               .map(
                 (row) => `
                   <tr>
-                    <td>${row.id}</td>
-                    ${visibleFields.map((field) => `<td>${nestedValue(row, field.name)}</td>`).join("")}
-                    <td class="table-actions">
+                    <td data-label="ID">${row.id}</td>
+                    ${visibleFields.map((field) => `<td data-label="${field.label}">${nestedValue(row, field.name)}</td>`).join("")}
+                    <td class="table-actions" data-label="Acoes">
                       ${canUpdate ? `<button data-update="${row.id}">Editar</button>` : ""}
                       <button data-delete="${row.id}">Excluir</button>
                     </td>

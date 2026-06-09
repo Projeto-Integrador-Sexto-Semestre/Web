@@ -13,32 +13,11 @@ export function Dashboard({ mqtt }) {
       tone: "temperature"
     },
     {
-      label: "Gas",
-      value: formatValue(payload.gasPpm),
-      unit: "ppm",
-      status: payload.gasPpm > 180 ? "Atencao" : "Seguro",
-      tone: "gas"
-    },
-    {
-      label: "Umidade",
-      value: formatValue(payload.humidity),
-      unit: "%",
-      status: "Estavel",
-      tone: "humidity"
-    },
-    {
       label: "Luminosidade",
       value: formatValue(payload.luminosity),
       unit: "%",
       status: payload.luminosity > 20 ? "Ambiente claro" : "Ambiente escuro",
       tone: "light"
-    },
-    {
-      label: "Fumaca",
-      value: formatValue(payload.smokePpm),
-      unit: "ppm",
-      status: payload.smokePpm > 25 ? "Atencao" : "Normal",
-      tone: "smoke"
     },
     {
       label: "Movimento",
@@ -54,12 +33,12 @@ export function Dashboard({ mqtt }) {
       <div>
         <p class="eyebrow">Dashboard</p>
         <h1>Monitoramento dos sensores</h1>
-        <p>Leituras e cadastros integrados ao backend SmartHouse para acompanhar temperatura, gas, fumaca, umidade, luminosidade e movimento da casa.</p>
+        <p>Leituras integradas ao backend SmartHouse para acompanhar temperatura, luminosidade, movimento e disponibilidade dos dispositivos da casa.</p>
       </div>
       <div class="hero-metrics">
-        <span><strong>${connected ? "Online" : "Offline"}</strong> Conexao</span>
-        <span><strong>${payload.deviceId ?? "--"}</strong> Dispositivo</span>
-        <span><strong>${mqtt?.topic ?? "home/+/telemetry"}</strong> Topico</span>
+        <span><small>Conexao</small><strong>${connected ? "Online" : "Offline"}</strong></span>
+        <span><small>Dispositivo</small><strong>${payload.deviceId ?? "--"}</strong></span>
+        <span><small>Topico</small><strong>${mqtt?.topic ?? "home/+/telemetry"}</strong></span>
       </div>
     </section>
 
@@ -89,20 +68,20 @@ export function Dashboard({ mqtt }) {
           <span>API</span>
         </div>
         <div class="room-list">
-          <span><b>Cozinha</b> Gas ${formatValue(payload.gasPpm)} ppm</span>
           <span><b>Sala</b> Temperatura ${formatValue(payload.temperature)} C</span>
+          <span><b>Cozinha</b> Luminosidade ${formatValue(payload.luminosity)}%</span>
           <span><b>Garagem</b> Movimento ${payload.motion ? "detectado" : "normal"}</span>
         </div>
       </article>
       <article class="chart-card">
         <div class="panel-title">
           <h2>Alertas recentes</h2>
-          <span>${payload.flame ? "1 ativo" : "0 ativos"}</span>
+          <span>${payload.motion ? "1 ativo" : "0 ativos"}</span>
         </div>
         <div class="alert-list">
-          <span class="is-ok">Gas dentro do limite</span>
           <span class="is-ok">Temperatura estavel</span>
-          <span class="is-ok">Nenhuma chama detectada</span>
+          <span class="is-ok">Luminosidade monitorada</span>
+          <span class="is-ok">Movimento sem ocorrencia</span>
         </div>
       </article>
     </section>

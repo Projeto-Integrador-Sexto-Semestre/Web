@@ -115,7 +115,7 @@ export const entityGroups = [
   },
   {
     title: "Alertas",
-    note: "Gas detectado, movimento e temperatura alta",
+    note: "Movimento, temperatura alta e eventos da casa",
     entities: [
       {
         key: "alerts",
