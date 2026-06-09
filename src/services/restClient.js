@@ -23,7 +23,7 @@ export async function restRequest(path, options = {}) {
     body
   });
   if (!response.ok) {
-    throw new Error(`API ${response.status}: ${await response.text()}`);
+    throw new Error(`Servidor ${response.status}: ${await response.text()}`);
   }
   return response.status === 204 ? null : response.json();
 }

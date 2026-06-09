@@ -2,6 +2,8 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { mockApi } from "../src/services/mockApi.js";
 import { Dashboard } from "../src/components/Dashboard.js";
+import { EntityForm } from "../src/components/EntityForm.js";
+import { entities } from "../src/data/entities.js";
 
 test("CT01 - exibe dashboard com leituras normais do MQTT", async () => {
   const mqtt = await mockApi.mqttSnapshot();
@@ -10,11 +12,13 @@ test("CT01 - exibe dashboard com leituras normais do MQTT", async () => {
   assert.equal(mqtt.connected, true);
   assert.match(html, /Monitoramento dos sensores/);
   assert.match(html, /26\.4/);
-  assert.match(html, /Seguro/);
+  assert.match(html, /Luminosidade/);
+  assert.match(html, /Movimento/);
   assert.match(html, /Normal/);
+  assert.doesNotMatch(html, /Gas|Fumaca|Umidade/);
 });
 
-test("CT02 - classifica gas acima do limite como atencao", () => {
+test("CT02 - classifica luminosidade conforme leitura", () => {
   const html = Dashboard({
     mqtt: {
       connected: true,
@@ -22,21 +26,17 @@ test("CT02 - classifica gas acima do limite como atencao", () => {
       lastPayload: {
         deviceId: "esp32-cozinha",
         temperature: 26,
-        humidity: 55,
-        gasPpm: 181,
         luminosity: 60,
-        smokePpm: 9,
-        motion: false,
-        flame: false
+        motion: false
       }
     }
   });
 
-  assert.match(html, /Gas/);
-  assert.match(html, /Atencao/);
+  assert.match(html, /Luminosidade/);
+  assert.match(html, /Ambiente claro/);
 });
 
-test("CT03 - classifica fumaca acima do limite como atencao", () => {
+test("CT03 - classifica movimento detectado", () => {
   const html = Dashboard({
     mqtt: {
       connected: true,
@@ -44,18 +44,15 @@ test("CT03 - classifica fumaca acima do limite como atencao", () => {
       lastPayload: {
         deviceId: "esp32-sala",
         temperature: 24,
-        humidity: 50,
-        gasPpm: 100,
         luminosity: 40,
-        smokePpm: 26,
-        motion: false,
-        flame: false
+        motion: true
       }
     }
   });
 
-  assert.match(html, /Fumaca/);
-  assert.match(html, /Atencao/);
+  assert.match(html, /Movimento/);
+  assert.match(html, /Detectado/);
+  assert.match(html, /Sim/);
 });
 
 test("CT04 - exibe valores ausentes como placeholder seguro", () => {
@@ -63,4 +60,14 @@ test("CT04 - exibe valores ausentes como placeholder seguro", () => {
 
   assert.match(html, /Offline/);
   assert.match(html, /--/);
+});
+
+test("CT05 - cadastro de usuario nao exige perfil", () => {
+  const entity = entities.find((item) => item.key === "users");
+  const html = EntityForm({ entity });
+
+  assert.match(html, /name="name"/);
+  assert.match(html, /name="email"/);
+  assert.match(html, /name="password"/);
+  assert.doesNotMatch(html, /profileId/);
 });

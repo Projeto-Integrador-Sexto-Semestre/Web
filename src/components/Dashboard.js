@@ -65,7 +65,6 @@ export function Dashboard({ mqtt }) {
       <article class="chart-card">
         <div class="panel-title">
           <h2>Ambientes monitorados</h2>
-          <span>API</span>
         </div>
         <div class="room-list">
           <span><b>Sala</b> Temperatura ${formatValue(payload.temperature)} C</span>

@@ -20,48 +20,54 @@ export function createApp(root) {
     authMode: "login",
     authLoading: false,
     authError: "",
-    profiles: [],
-    profilesLoaded: false,
     selectedKey: "dashboard",
     rows: [],
+    lookups: {},
     mqtt: null,
     loading: false,
-    source: "API",
     error: ""
   };
 
   const selectedEntity = () => entities.find((entity) => entity.key === state.selectedKey);
+  const relationKeysFor = (entity) => [
+    ...new Set(entity?.fields?.map((field) => field.relationKey).filter(Boolean) ?? [])
+  ];
 
   const withFallback = async (realCall, mockCall) => {
     try {
-      state.source = "API";
       state.error = "";
       return await realCall();
     } catch (error) {
       console.warn(error);
-      state.source = "Mock";
-      state.error = `API indisponivel em ${API_BASE_URL}. Exibindo dados locais.`;
+      state.error = `Servidor indisponivel em ${API_BASE_URL}. Exibindo dados locais.`;
       return mockCall();
     }
   };
 
-  const loadProfiles = async () => {
-    if (state.profilesLoaded) return;
-    try {
-      state.profiles = await restApi.profiles();
-    } catch (error) {
-      console.warn(error);
-      state.profiles = [];
-    }
-    state.profilesLoaded = true;
-    render();
+  const loadLookups = async (relationKeys) => {
+    if (!relationKeys.length) return {};
+
+    const entries = await Promise.all(
+      relationKeys.map(async (key) => {
+        const entity = entities.find((item) => item.key === key);
+        if (!entity) return [key, []];
+
+        try {
+          return [key, await restApi.list(entity)];
+        } catch (error) {
+          console.warn(error);
+          return [key, await mockApi.list(key)];
+        }
+      })
+    );
+
+    return Object.fromEntries(entries);
   };
 
   const setAuthMode = (mode) => {
     state.authMode = mode;
     state.authError = "";
     render();
-    if (mode === "register") loadProfiles();
   };
 
   const signIn = async (payload) => {
@@ -124,7 +130,12 @@ export function createApp(root) {
       state.mqtt = await withFallback(() => restApi.mqttSnapshot(), () => mockApi.mqttSnapshot());
     } else {
       const entity = selectedEntity();
-      state.rows = await withFallback(() => restApi.list(entity), () => mockApi.list(state.selectedKey));
+      const [rows, lookups] = await Promise.all([
+        withFallback(() => restApi.list(entity), () => mockApi.list(state.selectedKey)),
+        loadLookups(relationKeysFor(entity))
+      ]);
+      state.rows = rows;
+      state.lookups = { ...state.lookups, ...lookups };
     }
     state.loading = false;
     render();
@@ -152,7 +163,6 @@ export function createApp(root) {
     if (!state.currentUser) {
       root.innerHTML = AuthView({
         mode: state.authMode,
-        profiles: state.profiles,
         loading: state.authLoading,
         error: state.authError
       });
@@ -181,7 +191,7 @@ export function createApp(root) {
           ${
             state.selectedKey === "dashboard"
               ? Dashboard({ mqtt: state.mqtt })
-              : CrudView({ entity: currentEntity, rows: state.rows, loading: state.loading, source: state.source })
+              : CrudView({ entity: currentEntity, rows: state.rows, loading: state.loading, lookups: state.lookups })
           }
         </main>
       </div>

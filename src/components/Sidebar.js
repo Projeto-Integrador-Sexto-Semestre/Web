@@ -7,7 +7,6 @@ export function Sidebar({ groups, selectedKey, user }) {
         <span class="brand-mark">PI</span>
         <div>
           <strong>Smart Home</strong>
-          <small>KMP + REST + MQTT</small>
         </div>
       </div>
       <div class="user-card">

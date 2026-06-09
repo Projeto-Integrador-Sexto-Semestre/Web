@@ -11,8 +11,7 @@ export const entityGroups = [
         fields: [
           { name: "name", label: "Nome", type: "text" },
           { name: "email", label: "Email", type: "email" },
-          { name: "password", label: "Senha", type: "password", hideInTable: true },
-          { name: "profileId", label: "ID do Perfil", type: "number" }
+          { name: "password", label: "Senha", type: "password", hideInTable: true }
         ]
       },
       {
@@ -41,7 +40,7 @@ export const entityGroups = [
         fields: [
           { name: "name", label: "Casa", type: "text" },
           { name: "address", label: "Endereco", type: "text" },
-          { name: "userId", label: "ID do Usuario", type: "number" }
+          { name: "userId", label: "Usuario", type: "number", relationKey: "users" }
         ]
       },
       {
@@ -51,7 +50,7 @@ export const entityGroups = [
         fields: [
           { name: "name", label: "Comodo", type: "text" },
           { name: "type", label: "Tipo", type: "select", options: ["SALA", "COZINHA", "QUARTO", "BANHEIRO", "GARAGEM"] },
-          { name: "houseId", label: "ID da Casa", type: "number" }
+          { name: "houseId", label: "Casa", type: "number", relationKey: "homes" }
         ]
       }
     ]
@@ -67,10 +66,10 @@ export const entityGroups = [
         updateMethod: "PATCH_STATUS",
         fields: [
           { name: "name", label: "Dispositivo", type: "text" },
-          { name: "deviceTypeId", label: "ID do Tipo", type: "number" },
+          { name: "deviceTypeId", label: "Tipo de dispositivo", type: "number", relationKey: "deviceTypes" },
           { name: "topic", label: "Topico MQTT", type: "text" },
           { name: "status", label: "Status", type: "select", options: ["ON", "OFF"] },
-          { name: "roomId", label: "ID do Comodo", type: "number" }
+          { name: "roomId", label: "Comodo", type: "number", relationKey: "rooms" }
         ]
       },
       {
@@ -96,8 +95,8 @@ export const entityGroups = [
         fields: [
           { name: "name", label: "Sensor", type: "text" },
           { name: "mqttTopic", label: "Topico MQTT", type: "text" },
-          { name: "deviceTypeId", label: "ID do Tipo", type: "number" },
-          { name: "roomId", label: "ID do Comodo", type: "number" }
+          { name: "deviceTypeId", label: "Tipo de dispositivo", type: "number", relationKey: "deviceTypes" },
+          { name: "roomId", label: "Comodo", type: "number", relationKey: "rooms" }
         ]
       },
       {
@@ -107,7 +106,7 @@ export const entityGroups = [
         createEndpoint: "/sensor-history",
         fields: [
           { name: "value", label: "Valor", type: "number" },
-          { name: "sensorId", label: "ID do Sensor", type: "number" },
+          { name: "sensorId", label: "Sensor", type: "number", relationKey: "sensors" },
           { name: "timestamp", label: "Coletado em", type: "datetime-local", readOnly: true }
         ]
       }
@@ -123,9 +122,9 @@ export const entityGroups = [
         endpoint: "/alerts",
         fields: [
           { name: "message", label: "Mensagem", type: "text" },
-          { name: "alertTypeId", label: "ID do Tipo", type: "number" },
-          { name: "sensorId", label: "ID do Sensor", type: "number", optional: true },
-          { name: "deviceId", label: "ID do Dispositivo", type: "number", optional: true }
+          { name: "alertTypeId", label: "Tipo de alerta", type: "number", relationKey: "alertTypes" },
+          { name: "sensorId", label: "Sensor", type: "number", relationKey: "sensors", optional: true },
+          { name: "deviceId", label: "Dispositivo", type: "number", relationKey: "devices", optional: true }
         ]
       },
       {
@@ -151,7 +150,7 @@ export const entityGroups = [
           { name: "name", label: "Regra", type: "text" },
           { name: "condition", label: "Condicao", type: "text" },
           { name: "enabled", label: "Ativa", type: "select", options: ["true", "false"] },
-          { name: "actionId", label: "ID da Acao", type: "number" }
+          { name: "actionId", label: "Acao", type: "number", relationKey: "actions" }
         ]
       },
       {
@@ -160,7 +159,7 @@ export const entityGroups = [
         endpoint: "/actions",
         fields: [
           { name: "name", label: "Acao", type: "text" },
-          { name: "deviceId", label: "ID do Dispositivo", type: "number" },
+          { name: "deviceId", label: "Dispositivo", type: "number", relationKey: "devices" },
           { name: "command", label: "Comando", type: "select", options: ["ON", "OFF", "SET:25"] }
         ]
       }
@@ -176,7 +175,7 @@ export const entityGroups = [
         endpoint: "/notifications",
         fields: [
           { name: "message", label: "Mensagem", type: "text" },
-          { name: "userId", label: "ID do Usuario", type: "number" }
+          { name: "userId", label: "Usuario", type: "number", relationKey: "users" }
         ]
       },
       {
@@ -186,7 +185,7 @@ export const entityGroups = [
         fields: [
           { name: "eventType", label: "Tipo", type: "text" },
           { name: "message", label: "Mensagem", type: "text" },
-          { name: "userId", label: "ID do Usuario", type: "number" },
+          { name: "userId", label: "Usuario", type: "number", relationKey: "users" },
           { name: "timestamp", label: "Criado em", type: "datetime-local", readOnly: true }
         ]
       }
