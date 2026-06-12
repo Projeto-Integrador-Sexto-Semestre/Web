@@ -1,12 +1,39 @@
-# PI Smart Home Web
+# PI Smart Home - Web
 
-Frontend web do projeto **PI Smart Home**, criado com Vite e JavaScript modular. A aplicação oferece login/cadastro, dashboard de monitoramento e telas de CRUD para os principais recursos do sistema de casa inteligente.
+## Informações do Projeto
+
+**Nome do Projeto:** SMARTHOME
+
+**Integrantes do Projeto:**
+- Victor Daniel Araújo Silva
+- Gustavo Henrique Santana dos Santos
+- Camille Alves Cruz
+- Lucas Garcia Lima
+- Raphael Micucci Bomfim
+- Isaías Belarmina de Souza
+
+**Tema Escolhido:** Sistema de Monitoramento de Casa Inteligente (Smart Home)
+
+## Descrição do Problema Resolvido
+
+Atualmente, muitas residências possuem dispositivos inteligentes e sensores capazes de coletar informações sobre o ambiente, porém essas informações nem sempre ficam centralizadas em uma única plataforma, dificultando o monitoramento e o gerenciamento dos dispositivos. Este projeto propõe uma plataforma unificada para monitorar dispositivos e sensores, permitindo o acompanhamento em tempo real, o gerenciamento dos equipamentos e o recebimento de alertas quando eventos importantes forem detectados.
+
+## Divisão de Responsabilidades
+
+| Integrante | Responsabilidade |
+|---|---|
+| Victor Daniel Araújo Silva | Backend API |
+| Camille Alves Cruz | Backend API e Testes Unitários |
+| Lucas Garcia Lima | IoT e JWT (API) |
+| Isaías Belarmina de Souza | Mobile e Web |
+| Gustavo Henrique Santana dos Santos | Testes |
+| Raphael Micucci Bomfim | Documentação |
+
+---
 
 ## Visão Geral
 
-O projeto funciona como painel administrativo e operacional da solução Smart Home. Ele foi preparado para consumir a API Spring Boot do backend, mas também possui fallback com dados mockados para demonstração quando o servidor não estiver disponível.
-
-Principais recursos:
+Frontend web do projeto **PI Smart Home**, criado com Vite e JavaScript modular. A aplicação oferece login/cadastro, dashboard de monitoramento e telas de CRUD para os principais recursos do sistema de casa inteligente.
 
 - tela de autenticação com login e cadastro;
 - dashboard com status de sensores e dispositivos;
@@ -101,6 +128,29 @@ Exemplo de arquivo `.env.local`:
 ```env
 VITE_API_BASE_URL=http://localhost:8080
 ```
+
+## Variáveis de Ambiente Necessárias
+
+| Variável | Descrição | Exemplo |
+|---|---|---|
+| `VITE_API_BASE_URL` | URL base da API Backend | `http://localhost:8080` |
+
+Se não estiver definida, a aplicação usa `/backend` como fallback.
+
+## Exemplos de Usuários/Senhas para Teste
+
+**Usuários Padrão (para testes):**
+
+| Email | Senha | Propósito |
+|---|---|---|
+| `usuario@teste.com` | `Teste@123` | Teste básico |
+| `admin@teste.com` | `Admin@123` | Teste com privilégios |
+
+**Nota:** Criar novos usuários através da interface clicando em "Criar conta". As credenciais acima são exemplos; use valores seguros em produção.
+
+**Padrão de Senha Recomendado:**
+- Mínimo 8 caracteres
+- Incluir maiúsculas, minúsculas, números e caracteres especiais
 
 ## Autenticação
 
